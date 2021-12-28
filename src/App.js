@@ -1,25 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
-import web3Inst from './web3'
+import { useState, useEffect } from "react";
+import web3Inst from './web3';
+import lottery from './lottery';
 
 function App() {
 
+  const [manager, setManager] = useState("");
+
+  useEffect(() => {
+    async function getData () {
+      let managerAddress = await lottery.methods.manager().call();
+      setManager(managerAddress);
+    };
+    getData();
+  }, []);
+
+  console.log(manager);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h2>
+        Lottery Contract 
+      </h2>
+
+      <p>
+        Contract Managed by: {manager}
+      </p>
     </div>
   );
 }
