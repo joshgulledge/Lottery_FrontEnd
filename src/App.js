@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import web3Inst from './web3'
 
 function App() {
+
   return (
     <div className="App">
       <header className="App-header">
