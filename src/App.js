@@ -9,6 +9,7 @@ function App() {
   const [players, setPlayers] = useState([]);
   const [contractBalance, setContractBalance] = useState(""); // will be in wei
   const [amountEntered, setAmountEntered] = useState(""); // will be in eth
+  const [enterMessage, setEnterMessage] = useState("");
 
   useEffect(() => {
     // create a call to get the data from the contract
@@ -41,6 +42,9 @@ function App() {
 
     // send the transaction to the contract
     const accounts = await web3Inst.eth.getAccounts();
+
+    setEnterMessage('Transaction being processed... please continue to wait');
+
     await lottery.methods.enter().send({
       // assume the first account is the main one we will be using
       from: accounts[0],
@@ -48,7 +52,8 @@ function App() {
       value: web3Inst.utils.toWei(amountEntered, 'ether')
     });
 
-    
+    setEnterMessage('Congratulations! You have been entered!!');
+
   };
 
   return (
@@ -79,7 +84,7 @@ function App() {
             Amount of Eth to Enter:
             <input onChange={e => {
               setAmountEntered(e.target.value);
-            }} type="number" />
+            }} type="text" />
           </label>
         </div>
 
@@ -87,7 +92,10 @@ function App() {
           Enter Lottery
         </button>
       </form>
-
+      
+      <h4>
+        {enterMessage}
+      </h4>
 
     </div>
   );
