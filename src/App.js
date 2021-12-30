@@ -30,11 +30,6 @@ function App() {
 
   }, []);
 
-  // temporary log out the values -TODO remove the logs
-  console.log(manager);
-  console.log(players);
-  console.log(contractBalance);
-
   // local functions
   async function enterLottery (e) {
     e.preventDefault();
@@ -58,6 +53,13 @@ function App() {
     setEnterMessage('Transaction being processed... please continue to wait');
 
     const accounts = await web3Inst.eth.getAccounts();
+    
+    // only manager can pick a winner
+    if (manager != accounts[0]) {
+      setEnterMessage('Only contract manager can pick a winner');
+      return
+    };
+
     // trigger the pick winner method in the contract, must be contract manager
     await lottery.methods.pickWinner().send({
       from: accounts[0]
