@@ -38,8 +38,6 @@ function App() {
   // local functions
   async function enterLottery (e) {
     e.preventDefault();
-    console.log(`Entering the lottery with ${amountEntered} eth`);
-
     // send the transaction to the contract
     const accounts = await web3Inst.eth.getAccounts();
 
@@ -53,6 +51,19 @@ function App() {
     });
 
     setEnterMessage('Congratulations! You have been entered!!');
+
+  };
+
+  async function pickWinner () {
+    setEnterMessage('Transaction being processed... please continue to wait');
+
+    const accounts = await web3Inst.eth.getAccounts();
+    // trigger the pick winner method in the contract, must be contract manager
+    await lottery.methods.pickWinner().send({
+      from: accounts[0]
+    }); // when we send a transaction, we get no response back
+    // TODO - go back and change the contract to have a variable that saves the winner
+    setEnterMessage('Winner has been picked!');
 
   };
 
@@ -97,6 +108,12 @@ function App() {
         {enterMessage}
       </h4>
 
+      <h4>
+        Pick a Winner
+      </h4>
+      <button onClick={pickWinner}>
+        Chicken Dinner
+      </button>
     </div>
   );
 }
