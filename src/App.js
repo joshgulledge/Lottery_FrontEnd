@@ -112,6 +112,9 @@ function App() {
               id="Eth Enter"
               label="Amount of Eth to enter"
               helperText="Numbers only"
+              onChange={e => {
+                setAmountEntered(e.target.value);
+              }}
             />
           </div>
 
