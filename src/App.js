@@ -2,6 +2,10 @@ import './App.css';
 import { useState, useEffect } from "react";
 import web3Inst from './web3';
 import lottery from './lottery';
+import Header from './Header';
+// import material for style
+import { Typography, Button, 
+  Paper, TextField, Box } from '@mui/material';
 
 function App() {
   // local state variables
@@ -70,53 +74,68 @@ function App() {
   };
 
   return (
-    <div>
-      <h2>
+    <Box sx={{p:3}}>
+      {/* <h2>
         Lottery Contract 
-      </h2>
+      </h2> */}
+      <Header sx={{p:2}}>
 
-      <div>
+      </Header>
+
+      <Typography variant='h6'>
         Contract Managed by: {manager} 
-      </div>
+      </Typography>
 
-      <div>
+      <Typography variant='h6'>
         Current number of players: {players.length}
-      </div>
+      </Typography>
 
-      <div>
+      <Typography variant='h6'>
         Current balance of Lottery: {contractBalance} Eth
-      </div>
+      </Typography>
 
-      <form onSubmit={enterLottery}>
-        <h4>
-          Enter the Lottery today!
-        </h4>
+      <Paper sx={{p:2, m:2}} elevation={3}>
+        <form onSubmit={enterLottery}>
+          <Typography variant='h5'>
+            Enter the Lottery today!
+          </Typography>
 
-        <div>
-          <label>
-            Amount of Eth to Enter:
-            <input onChange={e => {
-              setAmountEntered(e.target.value);
-            }} type="text" />
-          </label>
-        </div>
+          <div>
+            {/* <label>
+              Amount of Eth to Enter:
+              <input onChange={e => {
+                setAmountEntered(e.target.value);
+              }} type="text" />
+            </label> */}
 
-        <button>
-          Enter Lottery
-        </button>
-      </form>
+            <TextField
+              id="Eth Enter"
+              label="Amount of Eth to enter"
+              helperText="Numbers only"
+            />
+          </div>
+
+          <Button variant="contained">
+            Enter Lottery
+          </Button>
+        </form>
+      </Paper>
       
       <h4>
         {enterMessage}
       </h4>
 
-      <h4>
-        Pick a Winner
-      </h4>
-      <button onClick={pickWinner}>
-        Chicken Dinner
-      </button>
-    </div>
+      <Paper sx={{p:2, m:2}} elevation={3}>
+        <Typography variant='h5'>
+          Pick a Winner
+        </Typography>
+        <Button 
+          variant = "contained"
+          onClick={pickWinner}>
+          Chicken Dinner
+        </Button>
+      </Paper>
+    </Box>
   );
 }
 
